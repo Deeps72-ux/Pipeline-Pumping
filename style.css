@@ -1,0 +1,239 @@
+/* Global styles */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Horizontal centering */
+    align-items: center;    /* Vertical centering */
+    height: 100vh;
+    background-color: #f3f3f3;
+    font-family: Arial, sans-serif;
+}
+
+.Process-variables{
+    margin: 120px;
+    padding: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left; /* Horizontal centering */
+    align-items: center;   /*vertical */
+    height: 100vh;
+    background-color: #f506a9;
+    font-family: Arial, sans-serif;
+}
+.pipeline-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 50px;
+}
+
+/* Valve styles */
+.valve {
+    width: 40px;
+    height: 50px;
+    position: relative;
+    --valve-color:red;
+    transition: --valve-color 5s ease-in-out;
+    z-index: 2; /* Valve is above the fluid */
+  }
+  .valve::before,
+  .valve::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 45px;
+    background: linear-gradient(135deg,var(--valve-color), var(--valve-color));
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+  .valve::before {
+    bottom: 10px;
+    left: 20px;
+    transform: rotate(90deg);
+  }
+  .valve::after {
+    bottom: -8px;
+    left: 20px;
+    transform: rotate(270deg);
+  }
+
+  /* product fluid */
+  .fluid {
+    width:0%;
+    height: 100%;
+    background-color: blue;
+    position: absolute;
+    bottom: 0; /* Ensures filling starts from the bottom */
+    transition: height 2s linear;
+    z-index: 1; /* Ensure fluid is below the valve */
+}
+
+
+/* Pipeline styles */
+
+.pipe{
+    width: 310px;
+    height: 50px;
+    background-color: orange;
+    border-radius: 10px; /* Optional for rounded corners */
+    box-sizing: border-box; /* Ensure border is included inside the element */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Vertical Drain Pipe */
+.vertical-drain-pipe {
+    position: absolute;
+    bottom: 30px;
+    width: 10px;
+    height: 50px; /* Adjust the height of the vertical pipe */
+  
+    border-radius: 10px; /* Optional for rounded corners */
+    box-sizing: border-box; /* Ensure border is included inside the element */
+    background-color: orange; /* Color for the vertical pipe */
+    top: -30px; /* Positioning the vertical drain pipe above the fluid pipe */
+    left: 30px; /* Positioning it to the right of the valve */
+}
+
+#drain-pipe-inlet {
+    margin-left: 300px;/* Position left vertical pipe to the left of the fluid pipe */
+}
+
+#drain-pipe-outlet {
+    margin-left: 630px; /* Position right vertical pipe to the right of the fluid pipe */
+}
+
+.pump {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 80px;
+    background-color: #8900f3;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pump-body {
+    width: 80%;
+    height: 80%;
+    background-color: #666;
+    border-radius: 10px;
+    position: absolute;
+    top: 10%;
+}
+
+.pump-wheel {
+    width: 55px;
+    height:55px;
+    border: 4px solid #888; /* Outer metallic border */
+    border-radius: 50%;
+    position: absolute;
+    background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pump-wheel::before,
+.pump-wheel::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 60px; /* Matches the diameter of the wheel */
+    background-color: #888; /* Color of the spokes */
+}
+
+.pump-wheel::before {
+    transform: rotate(0deg); /* Vertical spoke */
+}
+
+.pump-wheel::after {
+    transform: rotate(60deg); /* Diagonal spoke */
+}
+
+.spoke {
+    position: absolute;
+    width: 4px;
+    height: 60px; /* Matches the diameter of the wheel */
+    background-color: #888; /* Color of the third spoke */
+    transform: rotate(120deg); /* Second diagonal spoke */
+}
+
+/* Animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/* Control panel styles */
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 80%;
+}
+
+.valve-controls, .pump-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+
+button {
+    margin: 5px 0;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+/* process variable status */
+.state-display {
+    display: flex;
+    gap: 20px;
+    margin: 20px;
+}
+
+.status-block {
+    width: 150px;
+    height: 50px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    background-color: #f9f9f9;
+}
+
+.status-block.open {
+    background-color: #d4edda; /* Light green for Open */
+    color: #155724;
+}
+
+.status-block.closed {
+    background-color: #f8d7da; /* Light red for Closed */
+    color: #721c24;
+}

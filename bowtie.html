@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Vertical Bowtie</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .bowtie {
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+    .bowtie::before,
+    .bowtie::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 80px;
+      background: linear-gradient(135deg, #4caf50, #81c784);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+    .bowtie::before {
+        bottom: 30px;
+      left: 25px;
+      transform: rotate(90deg);
+    }
+    .bowtie::after {
+        bottom: 0;
+      left: 25px;
+      transform: rotate(270deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="bowtie"></div>
+</body>
+</html>

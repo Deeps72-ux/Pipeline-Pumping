@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermediate Pumping</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Deepan's understanding of Pumping </h1>
+    <div class="Charging-Venting-panel">
+        <!-- Left Valve -->
+        <button onclick="DrainInletLine()">Drain Inlet Line</button>
+        <button onclick="DrainOutletLine()">Drain Outlet Line</button>
+    
+    </div>
+    <div class="pipeline-container">
+        <div class="vertical-drain-pipe" id="drain-pipe-inlet"></div>
+        <div class="pipe">
+            <div class="valve" id="inlet-valve">
+
+            </div>
+            <div class="fluid" id="fluid-inlet">
+
+            </div>
+           
+        </div>
+
+        <div class="pump" id="pump">
+                <div class="pump-body"></div>
+                <div class="pump-wheel">
+                    <div class="spoke"></div> <!-- Third spoke -->
+                </div>
+                
+        </div>
+        <div class="vertical-drain-pipe" id="drain-pipe-outlet"></div>
+        <div class="pipe">
+            <div class="valve" id="outlet-valve" style="margin-left: 235px;">
+            </div>
+            <div class="fluid" id="fluid-outlet">
+
+            </div>
+            <div class="fluid" id="fluid-past-outlet" style="width:40px; right:0px;">
+
+            </div>
+           
+    </div>
+
+    </div>
+
+    <div class="control-panel">
+            <!-- Left Valve -->
+            <button onclick="InletValveToggle()">Toggle Inlet Valve</button>
+            <!-- Pump -->
+            <button onclick="startPump()">Start Pump</button>
+            <button onclick="stopPump()">Stop Pump</button>
+            <!-- Right Valve -->
+            <button onclick="OutletValveToggle()">Toggle Outlet Valve</button>
+        
+    </div>
+
+    <div class="Process-variables"> 
+        <button onclick="updateStatus()">Update Status</button>
+            <div id="inlet-valve-status" class="status-block">Loading...</div>
+            <div id="outlet-valve-status" class="status-block">Loading...</div>
+            <div id="inlet-line-status" class="status-block">Loading...</div>
+            <div id="outlet-line-status" class="status-block">Loading...</div>
+            <div id="inlet-drain-status" class="status-block">Loading...</div>
+            <div id="outlet-drain-status" class="status-block">Loading...</div>
+
+   </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
