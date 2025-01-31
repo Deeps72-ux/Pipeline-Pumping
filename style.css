@@ -4,7 +4,7 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Horizontal centering */
+ /* justify-content: center; // For Horizontal centering */
     align-items: center;    /* Vertical centering */
     height: 100vh;
     background-color: #f3f3f3;
@@ -12,8 +12,11 @@ body {
 }
 
 .Process-variables{
-    margin: 120px;
-    padding: 120px;
+    margin-top: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 3%;
+    padding: 50px;
     display: flex;
     flex-direction: row;
     justify-content: left; /* Horizontal centering */
@@ -21,7 +24,17 @@ body {
     height: 100vh;
     background-color: #f506a9;
     font-family: Arial, sans-serif;
+    gap: 35px;/*  Add spacing between the items */
+
 }
+
+.status-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping of items */
+    gap: 20px; /* Space between the status blocks */
+    justify-content: space-between; /* Space the blocks across the container */
+}
+
 .pipeline-container {
     display: flex;
     align-items: center;
@@ -82,26 +95,51 @@ body {
     overflow: hidden;
 }
 
+
 /* Vertical Drain Pipe */
-.vertical-drain-pipe {
+.drain-system {
     position: absolute;
     bottom: 30px;
     width: 10px;
-    height: 50px; /* Adjust the height of the vertical pipe */
-  
+    height: 190px; /* Adjust the height of the vertical pipe */
     border-radius: 10px; /* Optional for rounded corners */
     box-sizing: border-box; /* Ensure border is included inside the element */
-    background-color: orange; /* Color for the vertical pipe */
-    top: -30px; /* Positioning the vertical drain pipe above the fluid pipe */
+    background-color: orange; /* Color for the drain system */
+    top: 60px; /* Positioning the vertical drain pipe above the fluid pipe */
     left: 30px; /* Positioning it to the right of the valve */
 }
 
+/* Sump Tank */
+#sump-tank {
+    width: 400px;
+    height: 100px;
+    top: 200px;
+    left: 275px;
+    background: linear-gradient(180deg, #c7992e, orange);
+    border-radius: 50px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align fluid at the bottom */
+    overflow: hidden;
+    border: 2px solid black;
+}
+/* Tank Fluid */
+.tank-fluid {
+    width: 100%; /* Fluid fills the entire width of the tank */
+    height: 0; /* Start with empty tank */
+    background-color: blue; /* Light blue fluid color */
+    transition: height 1s ease-in-out; /* Smooth fill effect */
+}
 #drain-pipe-inlet {
-    margin-left: 300px;/* Position left vertical pipe to the left of the fluid pipe */
+    margin-left: 300px;/* Position inlet drain pipe to the left of the fluid pipe */
 }
 
 #drain-pipe-outlet {
-    margin-left: 630px; /* Position right vertical pipe to the right of the fluid pipe */
+    margin-left: 580px; /* Position outlet drain pipe to the right of the fluid pipe */
+    background-color: orange; /* Default color */
+    border-radius: 10px;
+    transition: height 0.2s linear; /* Smooth height change */
 }
 
 .pump {
@@ -142,7 +180,7 @@ body {
     content: '';
     position: absolute;
     width: 4px;
-    height: 60px; /* Matches the diameter of the wheel */
+    height: 47px; /* Matches the diameter of the wheel */
     background-color: #888; /* Color of the spokes */
 }
 
@@ -157,12 +195,11 @@ body {
 .spoke {
     position: absolute;
     width: 4px;
-    height: 60px; /* Matches the diameter of the wheel */
+    height: 47px; /* Matches the diameter of the wheel */
     background-color: #888; /* Color of the third spoke */
     transform: rotate(120deg); /* Second diagonal spoke */
 }
-
-/* Animation */
+/* rotation of pump wheel */
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -174,11 +211,40 @@ body {
 
 
 
+/* Power icon styles */
+
+.power-icon {
+    position: absolute;
+    top: -50px; /* Position above the pump */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    font-size: 40px; /* Larger size for visibility */
+    background-color: red  !important; /* Bright color for better visibility */
+    visibility: hidden; /* Initially hidden */
+    animation: flicker 0.6s infinite ;
+}
+
+/* Flickering effect for power icon */
+@keyframes flicker {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+
 /* Control panel styles */
 .control-panel {
     display: flex;
-    justify-content: space-between;
+  /*  justify-content: space-between; */
+  gap: 110px;
     margin-top: 20px;
+    margin-left: 350px;
     width: 80%;
 }
 
@@ -190,18 +256,31 @@ body {
 }
 
 button {
-    margin: 5px 0;
-    padding: 10px 20px;
+    margin: 5px 0px;
+    padding: 10px 19px; 
     border: none;
-    background-color: #007bff;
+    background-color: blue;
     color: white;
+   /* width: 50px; /* Set equal width and height */
+   /* height: 50px; */
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
+.Charging-Venting-panel{
+    position: absolute;
+}
+#inlet-side-drain{
+    left: 450px;
+    top: 90px;
+}
+#outlet-side-drain{
+    top: 90px;
+    left: 850px;
+}
 
 button:hover {
-    background-color: #0056b3;
+    background-color: rgb(5, 147, 255);
 }
 
 h3 {
@@ -211,20 +290,20 @@ h3 {
 /* process variable status */
 .state-display {
     display: flex;
-    gap: 20px;
+    gap: 50px;
     margin: 20px;
 }
 
 .status-block {
-    width: 150px;
-    height: 50px;
+    width: 200px;
+    height: 60px;
     border: 2px solid #333;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Arial, sans-serif;
-    font-size: 1em;
+    font-size: 1.05em;
     background-color: #f9f9f9;
 }
 

@@ -3,6 +3,8 @@ const outValve = document.querySelector("#outlet-valve");
 const fluidInlet = document.querySelector("#fluid-inlet");
 const fluidOutlet = document.querySelector("#fluid-outlet");
 const pumpWheel = document.querySelector(".pump-wheel");
+const tankFluid = document.getElementById("tank-fluid");
+const outletdrain=document.querySelector("#drain-pipe-outlet");
 
 fluidInlet.style.transition= "width 5s linear";
 fluidOutlet.style.transition= "width 2s linear";
@@ -16,7 +18,7 @@ let haltPump=false;
 let isInletFill = false;
 let isOutletFill = false;
 
-// Initialize the display
+// Initialize the PV(Process Variables) display
 updateStatus();
 
 setInterval(() => {
@@ -24,7 +26,7 @@ setInterval(() => {
 }, 5000);
 
 
-// Toggle valve state
+// Valve color transitions
 function toggleColor(valve, isOpen) {
 if(isOpen){ 
  // Step 1: Change to yellow
@@ -48,7 +50,7 @@ setTimeout(() => {
   
 }
 
-// Left Valve Controls
+// Inlet Valve Controls
 function InletValveToggle() {
     if(isInDraining && !isInletValveOpen)
     {
@@ -66,7 +68,7 @@ function InletValveToggle() {
     checkFluidFlow();
 }
 
-// Right Valve Controls
+// Outlet Valve Controls
 function OutletValveToggle() {
     if(isOutDraining && !isOutletValveOpen)
     {
@@ -81,11 +83,22 @@ function OutletValveToggle() {
 }
 
 // Pump Controls
+const bgMusic = document.getElementById("background-music");
+
 function startPump() {
+    if(isPumpOn)
+    return;
   
     if (isInletValveOpen && isInletFill && !isInDraining && !isOutDraining ) {
         isPumpOn = true;
+        tankFluid.style.height = `${0}%`; // Set height based on percentage
+        //power load started
+        togglePower(true); 
         haltPump=false;
+        //pump starting musics
+        bgMusic.volume = 1.0; // Set volume (0.0 to 1.0)
+        bgMusic.loop = true; // Enable looping
+        bgMusic.play(); // Play music
         pumpWheel.style.animation = "spin 2s linear infinite"; 
         if(isOutletValveOpen==false)
         OutletValveToggle();
@@ -100,9 +113,11 @@ function startPump() {
     }
 
 }
-
 function stopPump() {
     isPumpOn = false;
+    //power load stopped
+    togglePower(false);
+    bgMusic.pause(); // Pause music
     haltPump=true;
     pumpWheel.style.animationPlayState = "paused";
     if(isOutletValveOpen)
@@ -112,6 +127,20 @@ function stopPump() {
     fluidOutlet.style.width = currentWidth; // Maintain current width
     checkFluidFlow();
 }
+// Function to toggle pump and display power icon
+function togglePower(isPumpOn) {
+    const powerIcon = document.getElementById("power-icon");
+
+    if (isPumpOn) {
+        // Turn on pump and show lightning
+        powerIcon.style.visibility = "visible";
+    } else {
+        // Turn off pump and hide lightning
+        powerIcon.style.visibility = "hidden";
+    }
+}
+
+//Drain System
 function DrainInletLine(){
     stopPump();
     isInDraining=true;
@@ -119,10 +148,14 @@ function DrainInletLine(){
     InletValveToggle();
     pumpWheel.style.backgroundColor = "orange";
     fluidInlet.style.transition= "width 5s linear";
+    let currentWidthBeforeDraining = fluidInlet.offsetWidth; // Get the current width in pixels
     setTimeout(() => {
         fluidInlet.style.width = "40px"; // empty the entire pipeline
     }, 5000);
     fluidInlet.addEventListener("transitionend", () => {
+        let percentageBeforeDraining = (currentWidthBeforeDraining / fluidInlet.parentElement.offsetWidth) * 50;
+        updateTankFluidLevel(percentageBeforeDraining); // Update tank fluid level based on previous width percentage
+        alert("%drained is "+percentageBeforeDraining);     
         isInletFill=false;
         isInDraining=false;
         alert("Inlet line Drained");
@@ -130,9 +163,13 @@ function DrainInletLine(){
    
    checkFluidFlow();
 }
+
+//Outlet draining mechanism
 function DrainOutletLine(){
     stopPump();
     isOutDraining=true;
+    outletdrain.style.backgroundColor="blue";
+    let currentWidthBeforeDraining = fluidOutlet.offsetWidth; // Get the current width in pixels
     if(isOutletValveOpen)
     OutletValveToggle();
     fluidOutlet.style.transition= "width 5s linear";
@@ -145,11 +182,34 @@ function DrainOutletLine(){
 
     fluidOutlet.addEventListener("transitionend", () => {
         isOutletFill=false;
+        let percentageBeforeDraining = (currentWidthBeforeDraining / fluidOutlet.parentElement.offsetWidth) * 50;
+        updateTankFluidLevel(percentageBeforeDraining); // Update tank fluid level based on previous width percentage
+        alert("%drained is "+percentageBeforeDraining);
+        outletdrain.style.backgroundColor="orange";
         isOutDraining=false;
         alert("Outlet line Drained");
     }, { once: true });
    checkFluidFlow();
 }
+
+//Sump tank
+function updateTankFluidLevel(percentage) {
+
+     // Get the current height as a number (without the 'px' or '%')
+     let currentHeight = parseFloat(window.getComputedStyle(tankFluid).height); 
+
+     // Calculate the new height based on the given percentage
+     let parentHeight = parseFloat(window.getComputedStyle(tankFluid.parentElement).height); // Assuming parent height is in pixels
+     let newHeight = (currentHeight / parentHeight) * 100 + percentage; // Convert current height to percentage, add percentage
+     
+     // Clamp the new height between 0% and 100%
+     newHeight = Math.min(100, Math.max(0, newHeight));
+ 
+     // Set the updated height as a percentage
+     tankFluid.style.height = `${newHeight}%`;
+
+}
+
 // Check Fluid Flow
 function checkFluidFlow() {
     if (isInletValveOpen && isInletFill==false) {
@@ -240,11 +300,6 @@ function updateStatus() {
         outletDrainStatus.className = "status-block closed";
     }
 
-    if(isOutDraining && isOutletFill)
-    DrainOutletLine();
-
-    if(isInDraining && isInletFill)
-    DrainInletLine();
 }
 
 

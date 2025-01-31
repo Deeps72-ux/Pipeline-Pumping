@@ -8,14 +8,16 @@
 </head>
 <body>
     <h1>Deepan's understanding of Pumping </h1>
-    <div class="Charging-Venting-panel">
-        <!-- Left Valve -->
-        <button onclick="DrainInletLine()">Drain Inlet Line</button>
-        <button onclick="DrainOutletLine()">Drain Outlet Line</button>
-    
+    <div class="Charging-Venting-panel" id="inlet-side-drain">
+        <!-- Inlet side Drain -->
+        <button onclick="DrainInletLine()">Drain Inlet Line</button>    
     </div>
     <div class="pipeline-container">
-        <div class="vertical-drain-pipe" id="drain-pipe-inlet"></div>
+        
+        <!-- Inlet drain pipe -->
+        <div class="drain-system" id="drain-pipe-inlet"></div>
+
+        <!-- Main product pipe before the pump -->
         <div class="pipe">
             <div class="valve" id="inlet-valve">
 
@@ -25,15 +27,21 @@
             </div>
            
         </div>
-
+        <!-- For power supply to the motor of the pump -->
+        <span class="power-icon" id="power-icon">⚡</span>
+        <!-- Main pump -->
         <div class="pump" id="pump">
                 <div class="pump-body"></div>
                 <div class="pump-wheel">
                     <div class="spoke"></div> <!-- Third spoke -->
-                </div>
-                
+                </div>   
+            <audio id="background-music" src="NH 73.mp4"></audio>
         </div>
-        <div class="vertical-drain-pipe" id="drain-pipe-outlet"></div>
+   
+        <!-- Outlet drain pipe -->
+        <div class="drain-system" id="drain-pipe-outlet"></div>
+
+        <!-- Main Product pipe after pump-->
         <div class="pipe">
             <div class="valve" id="outlet-valve" style="margin-left: 235px;">
             </div>
@@ -43,32 +51,41 @@
             <div class="fluid" id="fluid-past-outlet" style="width:40px; right:0px;">
 
             </div>
-           
-    </div>
+        </div>
+
+             <!-- Sump Tank -->
+       <div class="drain-system" id="sump-tank">
+        <div class="tank-fluid" id="tank-fluid"></div>
+        </div>
 
     </div>
-
+    <div class="Charging-Venting-panel" id="outlet-side-drain">
+        <!-- Outlet side Drain -->
+        <button onclick="DrainOutletLine()">Drain Outlet Line</button>    
+    </div>
     <div class="control-panel">
             <!-- Left Valve -->
-            <button onclick="InletValveToggle()">Toggle Inlet Valve</button>
+            <button onclick="InletValveToggle()" style="font-size: 14px;">Toggle Inlet Valve</button>
             <!-- Pump -->
             <button onclick="startPump()">Start Pump</button>
-            <button onclick="stopPump()">Stop Pump</button>
+            <button onclick="stopPump()" style="margin-left: -85px;">Stop Pump</button>
             <!-- Right Valve -->
-            <button onclick="OutletValveToggle()">Toggle Outlet Valve</button>
+            <button onclick="OutletValveToggle()" style="margin-left: 80px;">Toggle Outlet Valve</button>
         
     </div>
 
+    <!-- Indications for the process variables -->
     <div class="Process-variables"> 
-        <button onclick="updateStatus()">Update Status</button>
+        <button onclick="updateStatus()" style="font-size: large;">Update Status</button>
+        <div class="status-container">
             <div id="inlet-valve-status" class="status-block">Loading...</div>
             <div id="outlet-valve-status" class="status-block">Loading...</div>
             <div id="inlet-line-status" class="status-block">Loading...</div>
             <div id="outlet-line-status" class="status-block">Loading...</div>
             <div id="inlet-drain-status" class="status-block">Loading...</div>
             <div id="outlet-drain-status" class="status-block">Loading...</div>
-
-   </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
